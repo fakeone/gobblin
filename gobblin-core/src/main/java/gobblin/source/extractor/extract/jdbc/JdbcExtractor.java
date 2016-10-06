@@ -795,7 +795,8 @@ public abstract class JdbcExtractor extends QueryBasedExtractor<JsonArray, JsonE
     if (itr.hasNext()) {
       resultset = itr.next();
     } else {
-      throw new SchemaException("Failed to get schema from Mysql - Resultset has no records");
+      throw new SchemaException(
+          "Failed to get schema from " + this.getClass().getSimpleName() + " - Resultset has no records");
     }
 
     JsonArray fieldJsonArray = new JsonArray();
@@ -825,7 +826,8 @@ public abstract class JdbcExtractor extends QueryBasedExtractor<JsonArray, JsonE
         fieldJsonArray.add(obj);
       }
     } catch (Exception e) {
-      throw new SchemaException("Failed to get schema from Mysql; error - " + e.getMessage(), e);
+      throw new SchemaException(
+          "Failed to get schema from " + this.getClass().getSimpleName() + "; error - " + e.getMessage(), e);
     }
 
     return fieldJsonArray;
@@ -840,7 +842,8 @@ public abstract class JdbcExtractor extends QueryBasedExtractor<JsonArray, JsonE
     if (itr.hasNext()) {
       resultset = itr.next();
     } else {
-      throw new HighWatermarkException("Failed to get high watermark from Mysql - Resultset has no records");
+      throw new HighWatermarkException(
+          "Failed to get high watermark from " + this.getClass().getSimpleName() + " - Resultset has no records");
     }
 
     Long HighWatermark;
@@ -870,7 +873,8 @@ public abstract class JdbcExtractor extends QueryBasedExtractor<JsonArray, JsonE
         HighWatermark = Long.parseLong(watermark);
       }
     } catch (Exception e) {
-      throw new HighWatermarkException("Failed to get high watermark from Mysql; error - " + e.getMessage(), e);
+      throw new HighWatermarkException(
+          "Failed to get high watermark from " + this.getClass().getSimpleName() + "; error - " + e.getMessage(), e);
     }
 
     return HighWatermark;
@@ -890,10 +894,13 @@ public abstract class JdbcExtractor extends QueryBasedExtractor<JsonArray, JsonE
           count = resultset.getLong(1);
         }
       } catch (Exception e) {
-        throw new RecordCountException("Failed to get source record count from MySql; error - " + e.getMessage(), e);
+        throw new RecordCountException(
+            "Failed to get source record count from " + this.getClass().getSimpleName() + "; error - " + e.getMessage(),
+            e);
       }
     } else {
-      throw new RuntimeException("Failed to get source record count from Mysql - Resultset has no records");
+      throw new RuntimeException(
+          "Failed to get source record count from " + this.getClass().getSimpleName() + " - Resultset has no records");
     }
 
     return count;
@@ -914,7 +921,8 @@ public abstract class JdbcExtractor extends QueryBasedExtractor<JsonArray, JsonE
     if (itr.hasNext()) {
       resultset = itr.next();
     } else {
-      throw new DataRecordException("Failed to get source record count from Mysql - Resultset has no records");
+      throw new DataRecordException(
+          "Failed to get source record count from " + this.getClass().getSimpleName() + " - Resultset has no records");
     }
 
     try {
@@ -950,7 +958,8 @@ public abstract class JdbcExtractor extends QueryBasedExtractor<JsonArray, JsonE
       this.log.info("Total number of records processed so far: " + this.totalRecordCount);
       return recordSet.iterator();
     } catch (Exception e) {
-      throw new DataRecordException("Failed to get records from MySql; error - " + e.getMessage(), e);
+      throw new DataRecordException(
+          "Failed to get records from " + this.getClass().getSimpleName() + "; error - " + e.getMessage(), e);
     }
   }
 
